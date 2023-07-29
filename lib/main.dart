@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:meals_app/screen/categories.dart';
 // import 'package:google_fonts/google_fonts.dart';
-import 'package:meals_app/screen/Categories.dart';
-import 'package:meals_app/screen/meals.dart';
 
 // final theme = ThemeData(
 //   // colorScheme: ColorScheme.from(
@@ -22,10 +20,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MealsScreen(
-        meals: [],
-        title: 'My Meals',
-      ),
+      home: Categories(),
     );
   }
 }
