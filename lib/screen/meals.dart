@@ -3,8 +3,7 @@ import 'package:meals_app/model/meal.dart';
 import 'package:meals_app/widget/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({Key key, @required this.title, @required this.meals})
-      : super(key: key);
+  const MealsScreen({super.key, required this.title, required this.meals});
 
   final String title;
   final List<Meal> meals;

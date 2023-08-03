@@ -3,7 +3,7 @@ import 'package:meals_app/model/meal.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({Key key, @required this.meal}) : super(key: key);
+  const MealItem({super.key, required this.meal});
   final Meal meal;
 
   @override

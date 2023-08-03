@@ -4,8 +4,7 @@ import 'package:meals_app/model/category_info.dart';
 
 class CategoryGridItem extends StatelessWidget {
   const CategoryGridItem(
-      {Key key, @required this.categoryInfo, @required this.didSelectCategory})
-      : super(key: key);
+      {super.key, required this.categoryInfo, required this.didSelectCategory});
   final Category categoryInfo;
   final void Function() didSelectCategory;
 

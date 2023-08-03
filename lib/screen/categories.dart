@@ -5,7 +5,7 @@ import 'package:meals_app/screen/meals.dart';
 import 'package:meals_app/widget/category_item_grid.dart';
 
 class Categories extends StatelessWidget {
-  const Categories({Key key}) : super(key: key);
+  const Categories({super.key});
 
   void _didSelectCategory(BuildContext context, Category category) {
     Navigator.push(context, MaterialPageRoute(builder: (ctx) {
