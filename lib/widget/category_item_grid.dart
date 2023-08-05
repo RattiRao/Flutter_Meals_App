@@ -15,7 +15,8 @@ class CategoryGridItem extends StatelessWidget {
       splashColor: Colors.blue,
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: EdgeInsets.all(50),
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           gradient: LinearGradient(
@@ -27,7 +28,7 @@ class CategoryGridItem extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
         ),
-        child: Text(categoryInfo.title),
+        child: Text(categoryInfo.title, softWrap: true,),
       ),
     );
   }

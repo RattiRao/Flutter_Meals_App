@@ -23,11 +23,12 @@ class Categories extends StatelessWidget {
         title: Text('Categories'),
       ),
       body: GridView(
+        padding: EdgeInsets.all(20),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 1.5,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10),
+            mainAxisSpacing: 18,
+            crossAxisSpacing: 18),
         children: DummyData.availableCategories
             .map((e) => CategoryGridItem(
                   categoryInfo: e,
