@@ -4,8 +4,9 @@ import 'package:meals_app/widget/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({super.key, required this.meal, required this.didSelectMeal});
   final Meal meal;
+  final void Function(Meal meal) didSelectMeal;
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() + meal.complexity.name.substring(1);
   }
@@ -22,7 +23,7 @@ class MealItem extends StatelessWidget {
       elevation: 4,
       child: InkWell(
         onTap: () {
-          print('logged meal');
+          didSelectMeal(meal);
         },
         splashColor: Colors.blue,
         child: Stack(
