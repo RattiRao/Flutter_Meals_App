@@ -18,11 +18,7 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Categories'),
-      ),
-      body: GridView(
+    return  GridView(
         padding: EdgeInsets.all(20),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -37,7 +33,6 @@ class Categories extends StatelessWidget {
                   },
                 ))
             .toList(),
-      ),
-    );
+      );
   }
 }

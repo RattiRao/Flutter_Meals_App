@@ -27,8 +27,10 @@ class MealDetails extends StatelessWidget {
             Text("Steps", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
             SizedBox(height: 18,),
             for (final step in meal.steps)
-             Text(step, textAlign: TextAlign.center,),
-      
+             Padding(
+               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8,),
+               child: Text(step, textAlign: TextAlign.center,),
+             ),
           ],
         ),
       ),
