@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/model/meal.dart';
 import 'package:meals_app/screen/categories.dart';
 import 'package:meals_app/screen/meals.dart';
 
@@ -11,17 +12,32 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  Widget selectedWidget = Categories();
-  String title = '';
   int selectedIndex = 0;
+  final List<Meal> _favMeals = [];
+
+  void _handleFavouriteMeal(Meal meal) {
+    setState(() {
+      bool isExists = _favMeals.contains(meal);
+      if (isExists) {
+      _favMeals.remove(meal);
+     } else {
+      _favMeals.add(meal);
+     }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    Widget selectedWidget = Categories(toggleFavMeal: _handleFavouriteMeal);
+    String title = '';
+
     if (selectedIndex == 1) {
-      selectedWidget = MealsScreen(meals: [],);
+      selectedWidget = MealsScreen(meals: _favMeals, toggleFavMeal: _handleFavouriteMeal,);
       title = 'Favorites';
     }
     else {
-      selectedWidget = Categories();
+      selectedWidget = Categories(toggleFavMeal: _handleFavouriteMeal,);
       title = 'Categories';
     }
 
