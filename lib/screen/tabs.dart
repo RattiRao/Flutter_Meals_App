@@ -16,14 +16,17 @@ class _TabScreenState extends State<TabScreen> {
   final List<Meal> _favMeals = [];
 
   void _handleFavouriteMeal(Meal meal) {
-    setState(() {
       bool isExists = _favMeals.contains(meal);
       if (isExists) {
-      _favMeals.remove(meal);
+        setState(() {
+           _favMeals.remove(meal);
+        });
+     
      } else {
-      _favMeals.add(meal);
+      setState(() {
+        _favMeals.add(meal);
+      });
      }
-    });
   }
 
 
