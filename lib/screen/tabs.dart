@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/model/meal.dart';
 import 'package:meals_app/screen/categories.dart';
 import 'package:meals_app/screen/meals.dart';
+import 'package:meals_app/widget/main_drawer.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -56,6 +57,7 @@ class _TabScreenState extends State<TabScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(title),),
       body: selectedWidget,
+      drawer: MainDrawer(),
       bottomNavigationBar: BottomNavigationBar(onTap: (index) {
         setState(() {
           selectedIndex = index;
