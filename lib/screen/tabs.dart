@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:meals_app/model/meal.dart';
 import 'package:meals_app/screen/categories.dart';
+import 'package:meals_app/screen/filters.dart';
 import 'package:meals_app/screen/meals.dart';
 import 'package:meals_app/widget/main_drawer.dart';
 
@@ -40,12 +43,16 @@ class _TabScreenState extends State<TabScreen> {
     }
   }
 
-  void _setScreen(ScreenType identifier) {
+  void _setScreen(ScreenType identifier) async {
+    Navigator.of(context).pop();
     switch (identifier) {
       case ScreenType.Categories:
-        Navigator.of(context).pop();
         break;
       case ScreenType.Filters:
+        final result = await Navigator.of(context).push<Map<FilterMeal, bool>>(MaterialPageRoute(
+          builder: (context) => FilterScreen(),
+        ));
+        print(result);
         break;
       default:
     }
