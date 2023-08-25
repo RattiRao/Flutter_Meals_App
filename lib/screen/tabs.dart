@@ -1,11 +1,19 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/model/meal.dart';
 import 'package:meals_app/screen/categories.dart';
 import 'package:meals_app/screen/filters.dart';
 import 'package:meals_app/screen/meals.dart';
 import 'package:meals_app/widget/main_drawer.dart';
+
+const Map<FilterMeal, bool> kFilterInitial = {
+  FilterMeal.glutenFree: false,
+  FilterMeal.lactosFree: false,
+  FilterMeal.vegetarian: false,
+  FilterMeal.vegan: false,
+};
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -18,6 +26,7 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   int selectedIndex = 0;
   final List<Meal> _favMeals = [];
+  Map<FilterMeal, bool> filterMap = kFilterInitial;
 
   void _showFavSnackbar(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -49,10 +58,16 @@ class _TabScreenState extends State<TabScreen> {
       case ScreenType.Categories:
         break;
       case ScreenType.Filters:
-        final result = await Navigator.of(context).push<Map<FilterMeal, bool>>(MaterialPageRoute(
-          builder: (context) => FilterScreen(),
+        final result = await Navigator.of(context)
+            .push<Map<FilterMeal, bool>>(MaterialPageRoute(
+          builder: (context) => FilterScreen(
+            mapFilters: filterMap,
+          ),
         ));
-        print(result);
+
+        setState(() {
+          filterMap = result ?? kFilterInitial;
+        });
         break;
       default:
     }
@@ -60,8 +75,27 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget selectedWidget = Categories(toggleFavMeal: _handleFavouriteMeal);
     String title = '';
+    final availableMeals = DummyData.dummyMeals.where((meal) {
+      if (filterMap[FilterMeal.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      }
+      if (filterMap[FilterMeal.lactosFree]! && !meal.isLactoseFree) {
+        return false;
+      }
+      if (filterMap[FilterMeal.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      }
+      if (filterMap[FilterMeal.vegan]! && !meal.isVegan) {
+        return false;
+      }
+      return true;
+    }).toList();
+
+    Widget selectedWidget = Categories(
+      toggleFavMeal: _handleFavouriteMeal,
+      availableMeals: availableMeals,
+    );
 
     if (selectedIndex == 1) {
       selectedWidget = MealsScreen(
@@ -72,6 +106,7 @@ class _TabScreenState extends State<TabScreen> {
     } else {
       selectedWidget = Categories(
         toggleFavMeal: _handleFavouriteMeal,
+        availableMeals: availableMeals,
       );
       title = 'Categories';
     }

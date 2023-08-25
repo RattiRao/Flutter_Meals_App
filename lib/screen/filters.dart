@@ -4,7 +4,8 @@ import 'package:meals_app/widget/filter_tile.dart';
 enum FilterMeal { glutenFree, lactosFree, vegetarian, vegan }
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key});
+  const FilterScreen({super.key, required this.mapFilters});
+  final Map<FilterMeal, bool> mapFilters;
 
   @override
   State<FilterScreen> createState() {
@@ -17,7 +18,16 @@ class _FilterScreenState extends State<FilterScreen> {
   bool _isLactosFreeSet = false;
   bool _isVegetarian = false;
   bool _isVegan = false;
-
+  
+  @override
+  void initState() {
+    super.initState();
+    _isGlutenFreeSet = widget.mapFilters[FilterMeal.glutenFree]!;
+    _isLactosFreeSet = widget.mapFilters[FilterMeal.lactosFree]!;
+    _isVegetarian = widget.mapFilters[FilterMeal.vegetarian]!;
+    _isVegan = widget.mapFilters[FilterMeal.vegan]!;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

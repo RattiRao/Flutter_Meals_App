@@ -32,7 +32,7 @@ class MealsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Sorry..there is no meals here',
+              'Sorry..there are no meals here',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(
