@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/provider/filters_provider.dart';
 import 'package:meals_app/widget/filter_tile.dart';
 
-enum FilterMeal { glutenFree, lactosFree, vegetarian, vegan }
-
-class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key, required this.mapFilters});
-  final Map<FilterMeal, bool> mapFilters;
+class FilterScreen extends ConsumerStatefulWidget {
+  const FilterScreen({super.key});
 
   @override
-  State<FilterScreen> createState() {
+  ConsumerState<FilterScreen> createState() {
     return _FilterScreenState();
   }
 }
 
-class _FilterScreenState extends State<FilterScreen> {
+class _FilterScreenState extends ConsumerState<FilterScreen> {
   bool _isGlutenFreeSet = false;
   bool _isLactosFreeSet = false;
   bool _isVegetarian = false;
   bool _isVegan = false;
-  
+
   @override
   void initState() {
     super.initState();
-    _isGlutenFreeSet = widget.mapFilters[FilterMeal.glutenFree]!;
-    _isLactosFreeSet = widget.mapFilters[FilterMeal.lactosFree]!;
-    _isVegetarian = widget.mapFilters[FilterMeal.vegetarian]!;
-    _isVegan = widget.mapFilters[FilterMeal.vegan]!;
+    final activeFilters = ref.read(filterProvider);
+    _isGlutenFreeSet = activeFilters[FilterMeal.glutenFree]!;
+    _isLactosFreeSet = activeFilters[FilterMeal.lactosFree]!;
+    _isVegetarian = activeFilters[FilterMeal.vegetarian]!;
+    _isVegan = activeFilters[FilterMeal.vegan]!;
   }
-  
+
   @override
   Widget build(BuildContext context) {
+    final mapFilters = ref.watch(filterProvider);
+
+    _isGlutenFreeSet = mapFilters[FilterMeal.glutenFree]!;
+    _isLactosFreeSet = mapFilters[FilterMeal.lactosFree]!;
+    _isVegetarian = mapFilters[FilterMeal.vegetarian]!;
+    _isVegan = mapFilters[FilterMeal.vegan]!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Filters'),
@@ -41,7 +48,7 @@ class _FilterScreenState extends State<FilterScreen> {
       //   }
       // },),
       body: WillPopScope(
-        onWillPop:() async {
+        onWillPop: () async {
           Navigator.of(context).pop({
             FilterMeal.glutenFree: _isGlutenFreeSet,
             FilterMeal.lactosFree: _isLactosFreeSet,
@@ -56,36 +63,36 @@ class _FilterScreenState extends State<FilterScreen> {
               subtitle: 'Only include gluten-free meal.',
               isValueSet: _isGlutenFreeSet,
               onChanged: (isChecked) {
-                setState(() {
-                  _isGlutenFreeSet = isChecked;
-                });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(FilterMeal.glutenFree, isChecked);
               }),
           FilterTile(
               title: 'Lactos-free',
               subtitle: 'Only incluee lactos-free meals.',
               isValueSet: _isLactosFreeSet,
               onChanged: (isChecked) {
-                setState(() {
-                  _isLactosFreeSet = isChecked;
-                });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(FilterMeal.lactosFree, isChecked);
               }),
           FilterTile(
               title: 'Vegetarian',
               subtitle: 'Only incluee vegetarian meals.',
               isValueSet: _isVegetarian,
               onChanged: (isChecked) {
-                setState(() {
-                  _isVegetarian = isChecked;
-                });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(FilterMeal.vegetarian, isChecked);
               }),
           FilterTile(
               title: 'Vegan',
               subtitle: 'Only incluee vegan meals.',
               isValueSet: _isVegan,
               onChanged: (isChecked) {
-                setState(() {
-                  _isVegan = isChecked;
-                });
+                ref
+                    .read(filterProvider.notifier)
+                    .setFilter(FilterMeal.vegan, isChecked);
               }),
         ]),
       ),
