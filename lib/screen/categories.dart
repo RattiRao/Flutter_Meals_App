@@ -67,8 +67,13 @@ class _CategoriesState extends State<Categories>
             .toList(),
       ),
       builder: (context, child) {
-        return Padding(
-          padding: EdgeInsets.only(top: 100 - _animationController.value * 100),
+        return SlideTransition(
+          position: _animationController.drive(
+            Tween(
+              begin: Offset(0, 0.3),
+              end: Offset(0, 0),
+            ),
+          ),
           child: child,
         );
       },
